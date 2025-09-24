@@ -1,0 +1,42 @@
+
+    <section>
+      <form>
+        <input type="text" placeholder="Filter by city" #filter />
+        <button class="primary" type="button" (click)="filterResults(filter.value)">Search</button>
+      </form>
+    </section>
+    <section class="results">
+      @for (h of filteredLocationList; track $index) {
+        <app-housing-location [housingLocation]="h"></app-housing-location>
+      <!-- attribute binding using [attrib]=" " -->
+       <!-- event binding using (event)=" " -->
+      }
+    </section>
+
+    <!--
+    HTML Template
+
+    1. Not allowed
+      - Global scope features: alert(), console, document, window etc.
+      - new keyword (exept for limited object/array )
+      - if, for, while, ++, --, +=, -=
+      - defining function
+    2. Allowed
+      - math: {{1+1}}
+      - user.isActive? 'yes': 'no'
+      - calling methods of the component: (click)="search()"
+      - new objects or array:  [myinput]='{name:'test'}'
+    3. Special elements
+      - <ng-container>: A grouping element that doesn't get rendered into the DOM. It's useful for applying a structural directive (like @if or @for) without adding an extra <div> to your layout.
+      - <ng-content>: Used for "content projection," which is how you can pass content from a parent component into a child component's template (similar to the children prop in React).
+      - <ng-template>: Defines a template that can be rendered dynamically somewhere else in your view.
+    4. input
+      - use variable using '#' e.g. #filter
+      - () event bindings
+      - [] properity  bindings
+    5. controls
+      - @if (*ng-if)
+      - @for (*ng-for)
+      - @switch (*ng-switch)
+    )
+    -->
