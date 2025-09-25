@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Housing } from '../housing.service'; 
+import { Housing } from '../service/housing.service'; 
 import { HousingLocationInfo } from '../housing-location/housing-location-info';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -25,10 +25,12 @@ export class Details {
 
   constructor(){
     const housingLocationId = Number(this.route.snapshot.params['id']); // details/:id
-    this.housingService.getHousingLocationById(housingLocationId).then((location: HousingLocationInfo | undefined) => {
-      console.log(`Fetched Location:`, location)
-      this.housingLocation.set(location);
-    }
+    //TODO handling Observable 1) Use RxJS pipe or subscribe 2) Convert to Promise (No good)
+    const location$ = this.housingService.getHousingLocationById(housingLocationId);
+    location$.subscribe((location)=>{
+        console.log(`Fetched Location:`, location)
+        this.housingLocation.set(location);
+      }
     )
 
   }

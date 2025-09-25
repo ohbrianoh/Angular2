@@ -1,10 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import { HousingLocationInfo } from './housing-location/housing-location-info';
+import { HousingLocationInfo } from '../housing-location/housing-location-info';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root' // Service Injection to root 
+  providedIn: 'root' // Singleton Service Inject
 })
 export class Housing {
   private http = inject(HttpClient); // Dependency Injection
@@ -35,11 +35,11 @@ export class Housing {
     }
   */
 
-   // Method#2: using HttpClient which returns an Observable
+  // Method#2: using HttpClient which returns an Observable
   getAllHousingLocations(): Observable<HousingLocationInfo[]> {
     return this.http.get<HousingLocationInfo[]>(this.url);
   }
- 
+
   getHousingLocationById(id: number): Observable<HousingLocationInfo | undefined> {
     // HttpClient can handle query parameters easily
     return this.http.get<HousingLocationInfo[]>(this.url, { params: { id: id.toString() } })
@@ -48,10 +48,10 @@ export class Housing {
       );
   }
 
-  /** 
+  /**  
    * Submit 
    * */
-  submitApplication(firstName: string, lastName:string, email:string) {
+  submitApplication(firstName: string, lastName: string, email: string) {
     console.log(
       `Homes application received: firstName: ${firstName}, lastName: ${lastName}, email: ${email}.`,
     );
