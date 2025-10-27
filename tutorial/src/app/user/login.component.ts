@@ -2,12 +2,14 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../user/user.service';
 import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     CommonModule, // for ngIf, etc.
+    RouterModule,
     ReactiveFormsModule // Enables reactive forms directives
   ],
   templateUrl: './login.component.html',
@@ -16,6 +18,7 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent implements OnInit {
   private fb = inject(FormBuilder);
   private userService = inject(UserService);
+  router = inject(Router);
 
   loginForm!: FormGroup;
   passwordVisible = false;
@@ -40,9 +43,13 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     // Stop here if form is invalid
-    if (this.loginForm.invalid) {
-      return;
+    if (this.loginForm.valid) {
+      // TODO user state management using NgRx
+      
+      this.userService.login(this.loginForm.value.username);
+      this.router.navigate(['/']);
     }
-    this.userService.login(this.loginForm.value.username);
+
+    
   }
 }
